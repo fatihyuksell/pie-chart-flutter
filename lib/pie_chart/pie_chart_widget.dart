@@ -41,7 +41,7 @@ class _PieChartState extends State<PieChart> with TickerProviderStateMixin {
     super.initState();
     _generalController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 200),
     )..forward();
 
     _generalAnimation =
@@ -49,7 +49,7 @@ class _PieChartState extends State<PieChart> with TickerProviderStateMixin {
 
     _selectionController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 100),
     );
 
     _selectionAnimation = Tween<double>(begin: 1.0, end: 1.1).animate(

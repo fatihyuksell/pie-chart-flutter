@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:pie_chart_project/currency.dart';
 import 'package:pie_chart_project/model/amount.dart';
 
 class PortfolioResponse extends Equatable {
@@ -43,14 +44,14 @@ class PortfolioResponse extends Equatable {
 }
 
 class PositionAnalysis extends Equatable {
-  final String symbol;
+  final String? symbol;
   final double distribution;
-  final Amount totalValue;
+  final Amount? totalValue;
 
   const PositionAnalysis({
-    required this.symbol,
+    this.symbol,
+    this.totalValue,
     required this.distribution,
-    required this.totalValue,
   });
 
   PositionAnalysis copyWith({
@@ -67,9 +68,10 @@ class PositionAnalysis extends Equatable {
 
   factory PositionAnalysis.fromJson(Map<String, dynamic> json) {
     return PositionAnalysis(
-      symbol: json['symbol'],
+      symbol: json['symbol'] != null ? json['symbol'] : 'AAPL',
       distribution: json['distribution'],
-      totalValue: Amount.fromJson(json['totalValue']),
+      totalValue: Amount.fromJson(json['totalValue'] ??
+          const Amount(amount: 0, currency: Currency.usd)),
     );
   }
 
@@ -78,7 +80,7 @@ class PositionAnalysis extends Equatable {
       '''PositionAnalysis(symbol: $symbol, distribution: $distribution, totalValue: $totalValue)''';
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         symbol,
         distribution,
         totalValue,
