@@ -32,7 +32,16 @@ class PieChartPainter extends CustomPainter {
     for (int i = 0; i < segments.length; i++) {
       final sweepAngle =
           (2 * pi * (segments[i].chartValue / total)) * animationValue;
-      paint.color = segments[i].color;
+      if (segments[i].gradient != null) {
+        paint.shader = segments[i].gradient!.createShader(
+              Rect.fromCircle(
+                center: Offset(size.width / 2, size.height / 2),
+                radius: radius,
+              ),
+            );
+      } else {
+        paint.color = segments[i].color;
+      }
 
       final isSelected = selectedIndex == i;
       final selectedRadius = isSelected ? radius * selectedScale : radius;

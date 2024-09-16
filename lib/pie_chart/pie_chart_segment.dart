@@ -8,6 +8,7 @@ final class PieChartSegment {
   final String label;
   final double amount;
   final Currency currency;
+  final LinearGradient? gradient;
 
   const PieChartSegment({
     required this.color,
@@ -15,6 +16,7 @@ final class PieChartSegment {
     required this.label,
     required this.amount,
     required this.currency,
+    this.gradient,
     this.listValue,
   });
 }

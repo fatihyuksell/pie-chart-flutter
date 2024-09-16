@@ -88,25 +88,10 @@ class _MyHomePageState extends State<MyHomePage> {
         // PositionAnalysis(distribution: 2),
 
         //30-18-12-8-7-5-5-5-5-5-5-5-5-5-4-1-1-1-1-1-1
-        // PositionAnalysis(distribution: 30),
-        // PositionAnalysis(distribution: 18),
-        // PositionAnalysis(distribution: 12),
-        // PositionAnalysis(distribution: 8),
-        // PositionAnalysis(distribution: 7),
-        // PositionAnalysis(distribution: 5),
-        // PositionAnalysis(distribution: 5),
-        // PositionAnalysis(distribution: 5),
-        // PositionAnalysis(distribution: 5),
-        // PositionAnalysis(distribution: 5),
-        // PositionAnalysis(distribution: 5),
-        // PositionAnalysis(distribution: 5),
-        // PositionAnalysis(distribution: 4),
-        // PositionAnalysis(distribution: 1),
-        // PositionAnalysis(distribution: 1),
-        // PositionAnalysis(distribution: 1),
-        // PositionAnalysis(distribution: 1),
-        // PositionAnalysis(distribution: 1),
-        // PositionAnalysis(distribution: 1),
+        PositionAnalysis(distribution: 50),
+        PositionAnalysis(distribution: 20),
+        PositionAnalysis(distribution: 20),
+        PositionAnalysis(distribution: 10),
 
         //48-42-10
         // PositionAnalysis(distribution: 48),
@@ -168,6 +153,52 @@ class _MyHomePageState extends State<MyHomePage> {
     // const Color(0xFF9575CD),
   ];
 
+  final List<LinearGradient> gradients = [
+    const LinearGradient(
+      colors: [
+        Colors.blue,
+        Colors.orange,
+      ],
+      // begin: Alignment.topLeft,
+      // end: Alignment.topRight,
+    ),
+    const LinearGradient(
+      colors: [
+        Colors.yellow,
+        Colors.red,
+      ],
+
+      // begin: Alignment.topLeft,
+      // end: Alignment.topRight,
+    ),
+    const LinearGradient(
+      colors: [
+        Colors.pink,
+        Colors.purple,
+      ],
+      stops: [1.0, 8.0],
+      begin: Alignment.bottomRight,
+      end: Alignment.bottomLeft,
+    ),
+    const LinearGradient(
+      colors: [
+        Colors.green,
+        Colors.brown,
+      ],
+      // begin: Alignment.topLeft,
+      // end: Alignment.topRight,
+    ),
+    LinearGradient(
+      colors: [
+        Colors.red,
+        Colors.black,
+        Colors.red.shade800,
+      ],
+      // begin: Alignment.topLeft,
+      // end: Alignment.topRight,
+    ),
+  ];
+
   Color getColor(int index) {
     final colorIndex = index % fixedColors.length;
     final nextColorIndex = (index + 1) % fixedColors.length;
@@ -177,7 +208,19 @@ class _MyHomePageState extends State<MyHomePage> {
     return fixedColors[colorIndex];
   }
 
+  LinearGradient gradientColor(int index) {
+    final colorIndex = index % gradients.length;
+    final nextColorIndex = (index + 1) % gradients.length;
+    if (gradients[colorIndex] == gradients[nextColorIndex]) {
+      return gradients[(colorIndex + 1) % gradients.length];
+    }
+    return gradients[colorIndex];
+  }
+
   List<PieChartSegment> get pieChartSegments {
+    //TODO: +5 vs -5
+    //STEP 1: + 5
+    //
     final List<PieChartSegment> segments = [];
     double othersTotal = 0.0;
     double othersTotalAmount = 0;
@@ -200,6 +243,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (analysis.distribution >= 5) {
         segments.add(
           PieChartSegment(
+            gradient: gradientColor(segments.length),
             color: getColor(segments.length),
             chartValue: analysis.distribution,
             label: analysis.symbol ?? 'AAPL',
